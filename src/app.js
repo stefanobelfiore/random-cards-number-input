@@ -29,6 +29,7 @@ window.onload = function() {
 const getCards = () => {
   BUTTON.addEventListener("click", event => {
     event.preventDefault();
+    SECTION_TO_DRAW.innerHTML = "";
     for (let index = 0; index < INPUT.value; index++) {
       drawCard(generateCards());
     }
