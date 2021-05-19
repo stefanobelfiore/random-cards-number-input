@@ -29,15 +29,19 @@ const SECTION_TO_DRAW_SELECTED = document.querySelector("#drawnCardsSelected");
 window.onload = function() {
   getCards();
   selectSort();
+  bubbleSort();
 };
 
 const getCards = () => {
   BUTTON.addEventListener("click", event => {
     event.preventDefault();
     SECTION_TO_DRAW.innerHTML = "";
+    SECTION_TO_DRAW_SELECTED.innerHTML = "";
+    myArray = [];
 
     for (let index = 0; index < INPUT.value; index++) {
       let myCard = generateCards();
+
       drawCard(myCard, SECTION_TO_DRAW);
       myArray.push(myCard);
     }
@@ -94,7 +98,6 @@ const drawCard = (card, section) => {
 
 const selectSort = () => {
   selectButton.addEventListener("click", () => {
-    console.log("gggggggggggggggggggggggg");
     let min = 0;
     let arr = myArray;
     while (min < arr.length) {
@@ -107,27 +110,31 @@ const selectSort = () => {
       }
       min++;
     }
-    myArray = [];
+
     for (let i = 0; i < arr.length; i++) {
       drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
     }
   });
 };
 
-// const bubbleSort = (arr) => {
-//     let wall = arr.length - 1; //we start the wall at the end of the array
-//     while (wall > 0){
-//         let index = 0;
-//         while (index < wall) {
-//           //compare the adjacent positions, if the right one is bigger, we have to swap
-//           if (arr[index] > arr[index + 1]) {
-//             let aux = arr[index];
-//             arr[index] = arr[index + 1];
-//             arr[index + 1] = aux;
-//           }
-//           index++;
-//         }
-//         wall--; //decrease the wall for optimization
-//     }
-// 	return arr;
-// };
+const bubbleSort = () => {
+  bubbleButton.addEventListener("click", () => {
+    let arr = myArray;
+    let wall = arr.length - 1; //we start the wall at the end of the array
+    while (wall > 0) {
+      let index = 0;
+      while (index < wall) {
+        if (arr[index].value > arr[index + 1].value) {
+          let aux = arr[index];
+          arr[index] = arr[index + 1];
+          arr[index + 1] = aux;
+        }
+        index++;
+      }
+      wall--; //decrease the wall for optimization
+    }
+    for (let i = 0; i < arr.length; i++) {
+      drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
+    }
+  });
+};
