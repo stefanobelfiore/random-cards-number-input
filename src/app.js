@@ -7,21 +7,7 @@ const BUTTON = document.querySelector("#generatorCard");
 const selectButton = document.querySelector("#selection");
 const bubbleButton = document.querySelector("#bubble");
 let myArray = [];
-const VALUES = [
-  "A",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "J",
-  "Q",
-  "K"
-];
+const VALUES = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
 const SUITS = ["♠", "♣", "♥", "♦"];
 const SECTION_TO_DRAW = document.querySelector("#drawnCardsContainer");
 const SECTION_TO_DRAW_SELECTED = document.querySelector("#drawnCardsSelected");
@@ -98,6 +84,7 @@ const drawCard = (card, section) => {
 
 const selectSort = () => {
   selectButton.addEventListener("click", () => {
+    SECTION_TO_DRAW_SELECTED.innerHTML = "";
     let min = 0;
     let arr = myArray;
     while (min < arr.length) {
@@ -108,33 +95,35 @@ const selectSort = () => {
           arr[i] = aux;
         }
       }
+      for (let i = 0; i < arr.length; i++) {
+        drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
+        console.log(arr[i], "mio arr[i] select");
+      }
       min++;
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-      drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
     }
   });
 };
 
 const bubbleSort = () => {
   bubbleButton.addEventListener("click", () => {
+    SECTION_TO_DRAW_SELECTED.innerHTML = "";
     let arr = myArray;
     let wall = arr.length - 1; //we start the wall at the end of the array
     while (wall > 0) {
       let index = 0;
       while (index < wall) {
-        if (arr[index].value > arr[index + 1].value) {
+        if (arr[index].id > arr[index + 1].id) {
           let aux = arr[index];
           arr[index] = arr[index + 1];
           arr[index + 1] = aux;
         }
+        for (let i = 0; i < arr.length; i++) {
+          drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
+          console.log(arr[i], "mio arr[i] bubble");
+        }
         index++;
       }
       wall--; //decrease the wall for optimization
-    }
-    for (let i = 0; i < arr.length; i++) {
-      drawCard(arr[i], SECTION_TO_DRAW_SELECTED);
     }
   });
 };
